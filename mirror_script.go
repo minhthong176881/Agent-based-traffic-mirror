@@ -247,10 +247,10 @@ func Mirror() {
         rollBack(c)
         log.Fatalf("configVxLAN err: %v", err)
     }
-    err = execute("rm", "vxlan.sh")
-    if err != nil {
-        log.Fatal("Fail to delete file!")
-    }
+    // err = execute("rm", "vxlan.sh")
+    // if err != nil {
+    //     log.Fatal("Fail to delete file!")
+    // }
     fmt.Println("=> Done")
 
     fmt.Println("--------------------------------------")
@@ -262,10 +262,10 @@ func Mirror() {
             log.Fatalf("configIngress err: %v", err)
         }
     }
-    err = execute("rm", "ingress.sh")
-    if err != nil {
-        log.Fatal("Fail to delete file!")
-    }
+    // err = execute("rm", "ingress.sh")
+    // if err != nil {
+    //     log.Fatal("Fail to delete file!")
+    // }
     fmt.Println("=> Done")
 
     fmt.Println("--------------------------------------")
@@ -277,20 +277,20 @@ func Mirror() {
                 rollBack(c)
                 log.Fatalf("configEgressSingle err: %v", err)
             }
-            err = execute("rm", "egress_single.sh")
-            if err != nil {
-                log.Fatal("Fail to delete file!")
-            }
+            // err = execute("rm", "egress_single.sh")
+            // if err != nil {
+            //     log.Fatal("Fail to delete file!")
+            // }
         } else {
             err = configEgressMultiple(c)
             if err != nil {
                 rollBack(c)
                 log.Fatalf("configEgressMultiple err: %v", err)
             }
-            err = execute("rm", "egress_multiple.sh")
-            if err != nil {
-                log.Fatal("Fail to delete file!")
-            }
+            // err = execute("rm", "egress_multiple.sh")
+            // if err != nil {
+            //     log.Fatal("Fail to delete file!")
+            // }
         }
     }
     fmt.Println("=> Done")
