@@ -192,8 +192,8 @@ func configEgressSingle(config *Config) error {
     return nil
 }
 
-func rollBack(config *Config) error {
-    f, err := os.Create("egress_single.sh")
+func generateRollbackScript(config *Config) error {
+    f, err := os.Create("rollback.sh")
     if err != nil {
         return err
     }
@@ -217,8 +217,11 @@ func rollBack(config *Config) error {
     if err != nil {
         return err
     }
+    return nil
+}
 
-    err = execute("sh", "rollback.sh")
+func rollBack(config *Config) error {
+    err := execute("sh", "rollback.sh")
     if err != nil {
         return err
     }
@@ -234,6 +237,8 @@ func Mirror() {
         log.Fatalf("getConf err: %v", err)
     }
     fmt.Println("=> Done")
+
+    generateRollbackScript(c)
 
     fmt.Println("--------------------------------------")
     fmt.Print("Configuring VxLAN...")
