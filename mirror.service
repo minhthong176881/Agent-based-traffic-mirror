@@ -1,0 +1,9 @@
+[Unit]
+Description=Systemd service for mirroring configuration
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/mirror_service.sh
+
+[Install]
+WantedBy=multi-user.target

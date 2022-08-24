@@ -1,0 +1,29 @@
+version: 2
+
+# Ip of the sensor
+sensor: 192.168.74.133
+
+# Show if the machine has one or many interfaces, values = single/multiple
+#interface_num: single
+
+# Interface mirrored (Interface that receives network traffic)
+mirror_interface: 
+  interface: ens33
+  ingress: true # Enable ingress mirroring
+  egress: true  # Enable egress mirroring
+
+# Interface used to setup VxLAN
+# If machine has single interface, source_interface should be the same as mirror_interface
+source_interface: ens33
+
+# VxLAN id
+vxlan_id: 108
+
+# tc filter
+# Prevent loop when sending/receiving traffic to/from sensor by dropping packets
+filter:
+  ip: 192.168.74.133
+  port: 4789
+  protocol: all 
+  priority: 1
+  action: deny # values = accept/deny

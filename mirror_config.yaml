@@ -1,0 +1,14 @@
+version: 2
+sensor: 192.168.74.133
+mirror_interface:
+  interface: ens33
+  ingress: true
+  egress: true
+source_interface: ens33
+vxlan_id: 108
+filters:
+- ip: 192.168.74.133
+  port: 4789
+  protocol: all
+  priority: 1
+  action: deny
