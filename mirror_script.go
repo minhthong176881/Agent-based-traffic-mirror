@@ -178,6 +178,11 @@ func configEgressSingle(config *Config) error {
     if err != nil {
         return err
     }
+    command = fmt.Sprintf("tc filter add dev lo parent ffff: protocol %s prio 1 u32 match ip src 127.0.0.1 action %s\n", config.Filters[0].Protocol, action)
+    _, err = f.WriteString(command)
+    if err != nil {
+        return err
+    }
     command = fmt.Sprintf("tc filter add dev lo parent ffff: protocol %s u32 match u32 0 0 action mirred egress mirror dev %s\n", config.Filters[0].Protocol, "vxlan" + strconv.FormatInt(config.VxLANID, 10))
     _, err = f.WriteString(command)
     if err != nil {
@@ -247,10 +252,10 @@ func Mirror() {
         rollBack(c)
         log.Fatalf("configVxLAN err: %v", err)
     }
-    // err = execute("rm", "vxlan.sh")
-    // if err != nil {
-    //     log.Fatal("Fail to delete file!")
-    // }
+    err = execute("rm", "vxlan.sh")
+    if err != nil {
+        log.Fatal("Fail to delete file!")
+    }
     fmt.Println("=> Done")
 
     fmt.Println("--------------------------------------")
@@ -262,10 +267,10 @@ func Mirror() {
             log.Fatalf("configIngress err: %v", err)
         }
     }
-    // err = execute("rm", "ingress.sh")
-    // if err != nil {
-    //     log.Fatal("Fail to delete file!")
-    // }
+    err = execute("rm", "ingress.sh")
+    if err != nil {
+        log.Fatal("Fail to delete file!")
+    }
     fmt.Println("=> Done")
 
     fmt.Println("--------------------------------------")
@@ -277,20 +282,20 @@ func Mirror() {
                 rollBack(c)
                 log.Fatalf("configEgressSingle err: %v", err)
             }
-            // err = execute("rm", "egress_single.sh")
-            // if err != nil {
-            //     log.Fatal("Fail to delete file!")
-            // }
+            err = execute("rm", "egress_single.sh")
+            if err != nil {
+                log.Fatal("Fail to delete file!")
+            }
         } else {
             err = configEgressMultiple(c)
             if err != nil {
                 rollBack(c)
                 log.Fatalf("configEgressMultiple err: %v", err)
             }
-            // err = execute("rm", "egress_multiple.sh")
-            // if err != nil {
-            //     log.Fatal("Fail to delete file!")
-            // }
+            err = execute("rm", "egress_multiple.sh")
+            if err != nil {
+                log.Fatal("Fail to delete file!")
+            }
         }
     }
     fmt.Println("=> Done")

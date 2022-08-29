@@ -216,7 +216,7 @@ func getDefaultFilter(config *Config) (*Filter, error) {
 		Port:     4789,
 		Protocol: "all",
 		Priority: 1,
-		Action:   "deny",
+		Action:   "allow",
 	}
 	return &filter, nil
 }
