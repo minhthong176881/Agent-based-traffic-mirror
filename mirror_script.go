@@ -183,6 +183,11 @@ func configEgressSingle(config *Config) error {
     if err != nil {
         return err
     }
+    command = fmt.Sprintf("tc filter add dev lo parent ffff: protocol %s prio 1 u32 match ip dst 127.0.0.1 action %s\n", config.Filters[0].Protocol, action)
+    _, err = f.WriteString(command)
+    if err != nil {
+        return err
+    }
     command = fmt.Sprintf("tc filter add dev lo parent ffff: protocol %s u32 match u32 0 0 action mirred egress mirror dev %s\n", config.Filters[0].Protocol, "vxlan" + strconv.FormatInt(config.VxLANID, 10))
     _, err = f.WriteString(command)
     if err != nil {
